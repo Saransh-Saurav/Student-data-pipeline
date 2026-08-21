@@ -4,7 +4,7 @@ A small full-stack app that takes a messy, real-world student CSV/XLSX, cleans i
 
 Built for the RM Student Selection technical assessment, against the provided `RM_Student_Selection_Dataset` (3,000 rows).
 
-**Video demo:** [`demo/demo.mp4`](demo/demo.mp4) (24 seconds, well under the 90s limit — click to play/download from GitHub).
+**Video demo:** [`demo/demo.mp4`](demo/demo .mp4)
 
 **Live deployment:**
 - App: [student-data-pipeline-ui.vercel.app](https://student-data-pipeline-ui.vercel.app)
