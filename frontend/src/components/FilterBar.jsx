@@ -1,28 +1,40 @@
+import SectionHeader from "./SectionHeader.jsx";
+import Icon from "./Icon.jsx";
+
 export default function FilterBar({ minTotal, onMinTotalChange, maxPossible, onExport, shortlistCount }) {
   return (
     <section className="card">
-      <h2>4. Minimum Total Score filter</h2>
+      <SectionHeader
+        step={4}
+        title="Minimum Total Score filter"
+        subtitle="Updates the shortlist below live as you move the slider. Debarred students are always excluded."
+      />
       <div className="filter-row">
-        <input
-          type="range"
-          min={0}
-          max={maxPossible}
-          value={minTotal}
-          onChange={(e) => onMinTotalChange(Number(e.target.value))}
-        />
-        <input
-          type="number"
-          min={0}
-          max={maxPossible}
-          value={minTotal}
-          onChange={(e) => onMinTotalChange(Number(e.target.value) || 0)}
-          className="filter-number"
-        />
-        <button className="btn" onClick={onExport} disabled={shortlistCount === 0}>
-          Export shortlist ({shortlistCount}) as CSV
+        <div className="slider-track-wrap">
+          <input
+            type="range"
+            min={0}
+            max={maxPossible}
+            value={minTotal}
+            onChange={(e) => onMinTotalChange(Number(e.target.value))}
+            style={{ "--fill": `${(minTotal / maxPossible) * 100}%` }}
+          />
+        </div>
+        <div className="filter-value-badge">
+          <input
+            type="number"
+            min={0}
+            max={maxPossible}
+            value={minTotal}
+            onChange={(e) => onMinTotalChange(Number(e.target.value) || 0)}
+            className="filter-number"
+          />
+          <span className="muted">/ {maxPossible}</span>
+        </div>
+        <button className="btn btn-icon" onClick={onExport} disabled={shortlistCount === 0}>
+          <Icon name="download" size={15} /> Export shortlist ({shortlistCount})
         </button>
       </div>
-      <p className="muted">Updates the shortlist below live as you move the slider. Debarred students are always excluded.</p>
     </section>
   );
 }

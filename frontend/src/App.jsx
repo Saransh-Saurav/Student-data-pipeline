@@ -4,6 +4,8 @@ import CleaningReport from "./components/CleaningReport.jsx";
 import FilterBar from "./components/FilterBar.jsx";
 import StatsCards from "./components/StatsCards.jsx";
 import StudentTable from "./components/StudentTable.jsx";
+import SectionHeader from "./components/SectionHeader.jsx";
+import Icon from "./components/Icon.jsx";
 import { uploadDataset, updateStatus } from "./api.js";
 import { downloadCsv } from "./utils/csv.js";
 
@@ -79,8 +81,16 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Student Data Pipeline &amp; UI</h1>
-        <p className="muted">Upload a raw student CSV/XLSX, clean it automatically, filter a live shortlist, and export it.</p>
+        <div className="app-logo" aria-hidden="true">SP</div>
+        <div>
+          <h1>Student Data Pipeline &amp; UI</h1>
+          <p className="muted">Upload a raw student CSV/XLSX, clean it automatically, filter a live shortlist, and export it.</p>
+          <div className="tech-pills">
+            <span className="tech-pill">React</span>
+            <span className="tech-pill">FastAPI</span>
+            <span className="tech-pill">pandas</span>
+          </div>
+        </div>
       </header>
 
       <UploadPanel onUpload={handleUpload} loading={loading} error={error} />
@@ -90,14 +100,17 @@ export default function App() {
       {students.length > 0 && (
         <>
           <section className="card">
-            <h2>3. Cleaned dataset ({students.length} students)</h2>
-            <input
-              type="text"
-              placeholder="Search by name…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-input"
-            />
+            <SectionHeader step={3} title={`Cleaned dataset (${students.length} students)`} />
+            <div className="search-wrap">
+              <Icon name="search" size={15} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search by name…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="search-input"
+              />
+            </div>
             <StudentTable students={searchedStudents} onToggleStatus={handleToggleStatus} />
             {statusError && <p className="error">{statusError}</p>}
           </section>
@@ -111,7 +124,7 @@ export default function App() {
           />
 
           <section className="card">
-            <h2>5. Live shortlist</h2>
+            <SectionHeader step={5} title="Live shortlist" />
             <StatsCards stats={stats} />
             <StudentTable students={shortlist} onToggleStatus={handleToggleStatus} />
           </section>

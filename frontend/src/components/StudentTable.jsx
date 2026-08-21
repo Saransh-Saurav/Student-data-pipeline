@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Icon from "./Icon.jsx";
 
 const PAGE_SIZE = 50;
 
@@ -29,11 +30,11 @@ export default function StudentTable({ students, onToggleStatus, showStatusColum
               <tr key={s.id} className={s.Status === "Debarred" ? "row-debarred" : ""}>
                 <td>{s.Name}</td>
                 <td>{s.Gender}</td>
-                <td>{s.Grade}</td>
-                <td>{s.Math}</td>
-                <td>{s.Science}</td>
-                <td>{s.English}</td>
-                <td className="cell-total">{s.Total}</td>
+                <td className="num">{s.Grade}</td>
+                <td className="num">{s.Math}</td>
+                <td className="num">{s.Science}</td>
+                <td className="num">{s.English}</td>
+                <td className="num cell-total">{s.Total}</td>
                 {showStatusColumn && (
                   <td>
                     <button
@@ -41,6 +42,7 @@ export default function StudentTable({ students, onToggleStatus, showStatusColum
                       onClick={() => onToggleStatus(s.id, s.Status === "Active" ? "Debarred" : "Active")}
                       title="Click to toggle Active/Debarred"
                     >
+                      <span className="status-dot" />
                       {s.Status}
                     </button>
                   </td>
@@ -49,22 +51,27 @@ export default function StudentTable({ students, onToggleStatus, showStatusColum
             ))}
           </tbody>
         </table>
-        {students.length === 0 && <p className="muted table-empty">No students match.</p>}
+        {students.length === 0 && (
+          <div className="table-empty">
+            <Icon name="search" size={22} />
+            <p className="muted">No students match.</p>
+          </div>
+        )}
       </div>
       {students.length > 0 && (
         <div className="pagination">
-          <button className="btn-secondary" onClick={() => setPage((p) => Math.max(0, p - 1))} disabled={clampedPage === 0}>
-            Prev
+          <button className="btn-secondary btn-icon" onClick={() => setPage((p) => Math.max(0, p - 1))} disabled={clampedPage === 0}>
+            <Icon name="chevron-left" size={14} /> Prev
           </button>
           <span>
             Page {clampedPage + 1} of {pageCount} &middot; {students.length} row{students.length === 1 ? "" : "s"}
           </span>
           <button
-            className="btn-secondary"
+            className="btn-secondary btn-icon"
             onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
             disabled={clampedPage >= pageCount - 1}
           >
-            Next
+            Next <Icon name="chevron-right" size={14} />
           </button>
         </div>
       )}

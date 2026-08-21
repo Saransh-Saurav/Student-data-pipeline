@@ -1,15 +1,20 @@
+import Icon from "./Icon.jsx";
+
 export default function StatsCards({ stats }) {
   const cards = [
-    ["Shortlisted", stats.count],
-    ["Average total", stats.avg],
-    ["Highest total", stats.max],
-    ["Lowest total", stats.min],
+    ["users", "Shortlisted", stats.count],
+    ["trend-up", "Average total", stats.avg],
+    ["target", "Highest total", stats.max],
+    ["target", "Lowest total", stats.min],
   ];
 
   return (
     <div className="stats-row">
-      {cards.map(([label, value]) => (
-        <div className="stat-card" key={label}>
+      {cards.map(([icon, label, value], i) => (
+        <div className="stat-card" key={label + i}>
+          <div className="stat-icon">
+            <Icon name={icon} size={16} />
+          </div>
           <div className="stat-value">{value}</div>
           <div className="stat-label">{label}</div>
         </div>
